@@ -135,11 +135,7 @@ impl VisualGraph {
 }
 
 impl VisualGraph {
-    pub fn prepare_render(
-        &mut self,
-        disable_opt: bool,
-        disable_layout: bool,
-    ) {
+    pub fn prepare_render(&mut self, disable_opt: bool, disable_layout: bool) {
         self.lower(disable_opt);
         Placer::new(self).layout(disable_layout);
     }
