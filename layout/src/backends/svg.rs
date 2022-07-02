@@ -5,6 +5,7 @@ use crate::core::format::{ClipHandle, RenderBackend};
 use crate::core::geometry::Point;
 use crate::core::style::StyleAttr;
 use std::collections::HashMap;
+use std::fmt::Write;
 
 static SVG_HEADER: &str = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
 
@@ -194,7 +195,8 @@ impl RenderBackend for SVGWriter {
         let cnt = 1 + text.lines().count();
         let size_y = (cnt * look.font_size) as f64;
         for line in text.lines() {
-            content.push_str(&format!("<tspan x = \"{}\" dy=\"1.0em\">", xy.x));
+            write!(&mut content, "<tspan x = \"{}\" dy=\"1.0em\">", xy.x)
+                .unwrap();
             content.push_str(&escape_string(line));
             content.push_str("</tspan>");
         }
@@ -250,7 +252,8 @@ impl RenderBackend for SVGWriter {
         let mut path_builder = String::new();
 
         // Handle the "exit vector" from the first point.
-        path_builder.push_str(&format!(
+        write!(
+            &mut path_builder,
             "M {} {} C {} {}, {} {}, {} {} ",
             path[0].0.x,
             path[0].0.y,
@@ -260,14 +263,17 @@ impl RenderBackend for SVGWriter {
             path[1].0.y,
             path[1].1.x,
             path[1].1.y
-        ));
+        )
+        .unwrap();
 
         // Handle the "entry vector" from the rest of the points.
         for point in path.iter().skip(2) {
-            path_builder.push_str(&format!(
+            write!(
+                &mut path_builder,
                 "S {} {}, {} {} ",
                 point.0.x, point.0.y, point.1.x, point.1.y
-            ));
+            )
+            .unwrap();
         }
 
         let stroke_width = look.line_width;
