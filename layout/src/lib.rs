@@ -94,7 +94,8 @@ fn simple_graph() {
 
     // Render the nodes to some rendering backend.
     let mut svg = SVGWriter::new();
-    vg.do_it(false, false, false, &mut svg);
+    vg.prepare_render(false, false);
+    vg.render(false, &mut svg);
 
     // Save the output.
     let _ = save_to_file("/tmp/graph.svg", &svg.finalize());
