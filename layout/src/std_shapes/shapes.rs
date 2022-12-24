@@ -85,19 +85,10 @@ impl Element {
             shape,
             look,
             orientation,
-            pos: Position::new(
-                Point::zero(),
-                size,
-                Point::zero(),
-                Point::splat(PADDING),
-            ),
+            pos: Position::new(Point::zero(), size, Point::zero(), Point::splat(PADDING)),
         }
     }
-    pub fn create_connector(
-        label: &str,
-        look: &StyleAttr,
-        dir: Orientation,
-    ) -> Element {
+    pub fn create_connector(label: &str, look: &StyleAttr, dir: Orientation) -> Element {
         Element {
             shape: ShapeKind::new_connector(label),
             look: look.clone(),
@@ -223,12 +214,7 @@ impl Visible for Element {
 
     fn resize(&mut self) {
         if let ShapeKind::Connector(_) = self.shape.clone() {
-            let size = get_shape_size(
-                self.orientation,
-                &self.shape,
-                self.look.font_size,
-                false,
-            );
+            let size = get_shape_size(self.orientation, &self.shape, self.look.font_size, false);
             self.pos.set_size(size);
             match self.orientation {
                 Orientation::TopToBottom => {
