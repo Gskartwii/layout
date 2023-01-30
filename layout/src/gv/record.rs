@@ -9,9 +9,9 @@ use crate::std_shapes::shapes::*;
 pub fn print_record(rec: &RecordDef, indent: usize) {
     match rec {
         RecordDef::Text(label, port) => {
-            println!("\"{}\"", label);
+            println!("\"{label}\"");
             if let Option::Some(port) = port {
-                println!("\"{}\"", port);
+                println!("\"{port}\"");
             }
         }
         RecordDef::Array(arr) => {

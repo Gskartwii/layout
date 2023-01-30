@@ -67,9 +67,9 @@ mod tests {
         let t0 = lexer.next_token();
         let t1 = lexer.next_token();
         let t2 = lexer.next_token();
-        println!("{:?}", t0);
-        println!("{:?}", t1);
-        println!("{:?}", t2);
+        println!("{t0:?}");
+        println!("{t1:?}");
+        println!("{t2:?}");
         assert!(is_identifier(t0, "a"));
         assert!(matches!(t1, Token::ArrowRight));
         assert!(is_identifier(t2, "b"));
@@ -79,8 +79,8 @@ mod tests {
         let mut lexer = Lexer::from_string("-12345");
         let t0 = lexer.next_token();
         let t1 = lexer.next_token();
-        println!("{:?}", t0);
-        println!("{:?}", t1);
+        println!("{t0:?}");
+        println!("{t1:?}");
         assert!(is_identifier(t0, "-12345"));
         assert!(matches!(t1, Token::EOF));
     }
@@ -89,8 +89,8 @@ mod tests {
         let mut lexer = Lexer::from_string("1.12");
         let t0 = lexer.next_token();
         let t1 = lexer.next_token();
-        println!("{:?}", t0);
-        println!("{:?}", t1);
+        println!("{t0:?}");
+        println!("{t1:?}");
         assert!(is_identifier(t0, "1.12"));
         assert!(matches!(t1, Token::EOF));
     }
@@ -115,7 +115,7 @@ mod tests {
         let mut tok = lexer.next_token();
         let mut counter = 1;
         while !matches!(tok, Token::EOF) {
-            println!("{:?}", tok);
+            println!("{tok:?}");
             if let Token::Error(_) = tok {
                 lexer.print_error();
                 panic!();
@@ -132,7 +132,7 @@ mod tests {
         let mut parser = DotParser::new("graph { a -> b; b -> c;}");
         if let Result::Err(err) = parser.process() {
             parser.print_error();
-            println!("Error: {}", err);
+            println!("Error: {err}");
             panic!();
         }
     }
@@ -142,7 +142,7 @@ mod tests {
         let mut parser = DotParser::new("graph { a -> b -> c; }");
         if let Result::Err(err) = parser.process() {
             parser.print_error();
-            println!("Error: {}", err);
+            println!("Error: {err}");
             panic!();
         }
     }
@@ -153,7 +153,7 @@ mod tests {
         let mut parser = DotParser::new(&program[..]);
         if let Result::Err(err) = parser.process() {
             parser.print_error();
-            println!("Error: {}", err);
+            println!("Error: {err}");
             panic!();
         }
     }
@@ -227,7 +227,7 @@ mod tests {
     fn test_median_range() {
         for i in 2..10 {
             let data: Vec<f64> = (1..i).map(|x: usize| x as f64).collect();
-            println!("{:?}", data);
+            println!("{data:?}");
             let _ = weighted_median(&data);
         }
     }

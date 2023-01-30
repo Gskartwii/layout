@@ -23,7 +23,7 @@ fn print_arrow(k: &ast::ArrowKind, indent: usize) {
 }
 fn print_attribute(a: &str, b: &str, indent: usize, i: usize) {
     print!("{}", " ".repeat(indent));
-    println!("{})\"{}\" = \"{}\"", i, a, b);
+    println!("{i})\"{a}\" = \"{b}\"");
 }
 fn print_attribute_list(ll: &ast::AttributeList, indent: usize) {
     for (i, att) in ll.list.iter().enumerate() {

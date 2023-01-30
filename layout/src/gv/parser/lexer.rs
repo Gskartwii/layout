@@ -51,7 +51,7 @@ impl Lexer {
         let mut idx = 0;
         // Print every char in the file.
         for ch in self.input.iter() {
-            print!("{}", ch);
+            print!("{ch}");
             idx += 1;
             if idx == self.pos {
                 found_loc = true;

@@ -6,8 +6,7 @@ use crate::core::geometry::Point;
 use crate::core::style::StyleAttr;
 use std::collections::HashMap;
 
-static SVG_HEADER: &str =
-    r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
+static SVG_HEADER: &str = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
 
 static SVG_DEFS: &str = r#"<defs>
 <marker id="startarrow" markerWidth="10" markerHeight="7"
@@ -97,11 +96,9 @@ impl SVGWriter {
         if let Option::Some(x) = self.font_style_map.get(&font_size) {
             return x.0.clone();
         }
-        let class_name = format!("a{}", font_size);
-        let class_impl = format!(
-            ".a{} {{ font-size: {}px; font-family: Times, serif; }}",
-            font_size, font_size
-        );
+        let class_name = format!("a{font_size}");
+        let class_impl =
+            format!(".a{font_size} {{ font-size: {font_size}px; font-family: Times, serif; }}");
         let impl_ = (class_name.clone(), class_impl);
         self.font_style_map.insert(font_size, impl_);
         class_name
@@ -129,10 +126,7 @@ impl SVGWriter {
         let svg_line = format!(
             "<svg width=\"{}\" height=\"{}\" viewBox=\"0 0 {} {}\
             \" xmlns=\"http://www.w3.org/2000/svg\">\n",
-            self.view_size.x,
-            self.view_size.y,
-            self.view_size.x,
-            self.view_size.y
+            self.view_size.x, self.view_size.y, self.view_size.x, self.view_size.y
         );
         result.push_str(&svg_line);
         result.push_str(SVG_DEFS);
@@ -143,18 +137,12 @@ impl SVGWriter {
     }
 }
 impl RenderBackend for SVGWriter {
-    fn draw_rect(
-        &mut self,
-        xy: Point,
-        size: Point,
-        look: &StyleAttr,
-        clip: Option<ClipHandle>,
-    ) {
+    fn draw_rect(&mut self, xy: Point, size: Point, look: &StyleAttr, clip: Option<ClipHandle>) {
         self.grow_window(xy, size);
 
         let mut clip_option = String::new();
         if let Option::Some(clip_id) = clip {
-            clip_option = format!("clip-path=\"url(#C{})\"", clip_id);
+            clip_option = format!("clip-path=\"url(#C{clip_id})\"");
         }
 
         let fill_color = look.fill_color.unwrap_or_else(Color::transparent);
@@ -327,12 +315,7 @@ impl RenderBackend for SVGWriter {
         self.content.push_str(&line1);
     }
 
-    fn create_clip(
-        &mut self,
-        xy: Point,
-        size: Point,
-        rounded_px: usize,
-    ) -> ClipHandle {
+    fn create_clip(&mut self, xy: Point, size: Point, rounded_px: usize) -> ClipHandle {
         let handle = self.clip_regions.len();
 
         let clip_code = format!(
