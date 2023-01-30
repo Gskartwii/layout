@@ -244,9 +244,9 @@ impl RenderBackend for SVGWriter {
         }
 
         let dash = if dashed {
-            &"stroke-dasharray=\"5,5\""
+            "stroke-dasharray=\"5,5\""
         } else {
-            &""
+            ""
         };
         let start = if head.0 {
             "marker-start=\"url(#startarrow)\""

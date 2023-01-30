@@ -97,12 +97,7 @@ fn test1(offset_x: f64, offset_y: f64, svg: &mut SVGWriter) {
     render::render_arrow(svg, LAYOUT_HELPER, &vec[..], &stl);
 }
 
-fn test3(
-    offset_x: f64,
-    offset_y: f64,
-    offset_x_other: f64,
-    svg: &mut SVGWriter,
-) {
+fn test3(offset_x: f64, offset_y: f64, offset_x_other: f64, svg: &mut SVGWriter) {
     let sz = Point::new(400., 50.);
 
     let sp0 = ShapeKind::new_box("one");
@@ -132,12 +127,7 @@ fn test3(
     render::render_arrow(svg, LAYOUT_HELPER, &vec[..], &stl);
 }
 
-fn test4(
-    offset_x: f64,
-    offset_y: f64,
-    offset_x_other: f64,
-    svg: &mut SVGWriter,
-) {
+fn test4(offset_x: f64, offset_y: f64, offset_x_other: f64, svg: &mut SVGWriter) {
     let sz = Point::new(400., 50.);
 
     let sp0 = ShapeKind::new_circle("one");

@@ -312,8 +312,7 @@ impl<'a> BK<'a> {
             for succ in self.vg.succ(*elem) {
                 // Check if and where it points to in R1. (we could have
                 // same-row self-edges).
-                if let Option::Some(idx1) = r1.iter().position(|&r| r == *succ)
-                {
+                if let Option::Some(idx1) = r1.iter().position(|&r| r == *succ) {
                     // Figure out if this is a strong edge or a regular edge.
                     let c0 = self.vg.is_connector(*elem);
                     let c1 = self.vg.is_connector(*succ);
@@ -387,7 +386,7 @@ impl<'a> BK<'a> {
 
     /// \returns the index of \p elem in \p vec.
     fn index_of(elem: NodeHandle, vec: &[NodeHandle]) -> Option<usize> {
-        (0..vec.len()).find(|&i| vec[i] == elem)
+        vec.iter().position(|el| el == &elem)
     }
 
     fn compute_alignment(&self, order: OrderLR) -> NodeAttachInfo {
@@ -422,13 +421,12 @@ impl<'a> BK<'a> {
 
                 // Scan the predecessors:
                 for pred in self.vg.preds(node) {
-                    let idx;
                     // Search for the index of the predecessor in the row.
-                    if let Some(idx_in_row) = Self::index_of(*pred, &r0) {
-                        idx = idx_in_row;
+                    let idx = if let Some(idx_in_row) = Self::index_of(*pred, &r0) {
+                        idx_in_row
                     } else {
                         continue;
-                    }
+                    };
 
                     // Don't mess with nodes that are taken.
                     if used[idx] {
@@ -446,8 +444,8 @@ impl<'a> BK<'a> {
                 // Mark the current node as aligned to the 'best' node on the
                 // previous line.
                 if let Some(idx) = best_idx {
-                    for i in 0..(idx + 1) {
-                        used[i] = true;
+                    for used_mark in used.iter_mut().take(i + 1) {
+                        *used_mark = true;
                     }
                     align_info.add(node, r0[idx]);
                 }
