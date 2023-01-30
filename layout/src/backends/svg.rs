@@ -7,11 +7,7 @@ use crate::core::style::StyleAttr;
 use std::collections::HashMap;
 use std::fmt::Write;
 
-<<<<<<< HEAD:layout/src/backends/svg.rs
 static SVG_HEADER: &str = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
-=======
-static SVG_HAEDER: &str = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
->>>>>>> 822d7bd (Satisfy clippy for Rust 1.67):src/backends/svg.rs
 
 static SVG_DEFS: &str = r#"<defs>
 <marker id="startarrow" markerWidth="10" markerHeight="7"
