@@ -7,7 +7,8 @@ use crate::core::style::StyleAttr;
 use std::collections::HashMap;
 use std::fmt::Write;
 
-static SVG_HEADER: &str = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
+static SVG_HEADER: &str =
+    r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>"#;
 
 static SVG_DEFS: &str = r#"<defs>
 <marker id="startarrow" markerWidth="10" markerHeight="7"
@@ -127,7 +128,10 @@ impl SVGWriter {
         let svg_line = format!(
             "<svg width=\"{}\" height=\"{}\" viewBox=\"0 0 {} {}\
             \" xmlns=\"http://www.w3.org/2000/svg\">\n",
-            self.view_size.x, self.view_size.y, self.view_size.x, self.view_size.y
+            self.view_size.x,
+            self.view_size.y,
+            self.view_size.x,
+            self.view_size.y
         );
         result.push_str(&svg_line);
         result.push_str(SVG_DEFS);
@@ -138,7 +142,13 @@ impl SVGWriter {
     }
 }
 impl RenderBackend for SVGWriter {
-    fn draw_rect(&mut self, xy: Point, size: Point, look: &StyleAttr, clip: Option<ClipHandle>) {
+    fn draw_rect(
+        &mut self,
+        xy: Point,
+        size: Point,
+        look: &StyleAttr,
+        clip: Option<ClipHandle>,
+    ) {
         self.grow_window(xy, size);
 
         let mut clip_option = String::new();
@@ -195,7 +205,8 @@ impl RenderBackend for SVGWriter {
         let cnt = 1 + text.lines().count();
         let size_y = (cnt * look.font_size) as f64;
         for line in text.lines() {
-            write!(&mut content, "<tspan x = \"{}\" dy=\"1.0em\">", xy.x).unwrap();
+            write!(&mut content, "<tspan x = \"{}\" dy=\"1.0em\">", xy.x)
+                .unwrap();
             content.push_str(&escape_string(line));
             content.push_str("</tspan>");
         }
@@ -320,7 +331,12 @@ impl RenderBackend for SVGWriter {
         self.content.push_str(&line1);
     }
 
-    fn create_clip(&mut self, xy: Point, size: Point, rounded_px: usize) -> ClipHandle {
+    fn create_clip(
+        &mut self,
+        xy: Point,
+        size: Point,
+        rounded_px: usize,
+    ) -> ClipHandle {
         let handle = self.clip_regions.len();
 
         let clip_code = format!(
